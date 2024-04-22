@@ -1,0 +1,1707 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Coupled Aircraft-Mission Optimization</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/coupled_aircraft_mission_optimization';</script>
+    <link rel="icon" href="../_static/aviary_logo.png"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Mission Optimization with Many Phases for a Commercial Aircraft" href="additional_flight_phases.html" />
+    <link rel="prev" title="Optimizing the Mission Profile of a Conventional Aircraft" href="more_advanced_example.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/aviary.png" class="logo__image only-light" alt=" - Home"/>
+    <script>document.write(`<img src="../_static/aviary.png" class="logo__image only-dark" alt=" - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Aviary Documentation
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Getting Started</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/what_aviary_does.html">What Aviary Does</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/tools_that_aviary_uses.html">Tools That Aviary is Built Upon</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/expected_user_knowledge.html">Expected User Knowledge</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting_started/onboarding.html">Onboarding Guide</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/onboarding_level1.html">Level 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/onboarding_level2.html">Level 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/onboarding_level3.html">Level 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/onboarding_ext_subsystem.html">Models with External Subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../getting_started/input_csv_phase_info.html">Vehicle Input .csv File and Phase_info Dictionary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/now_what.html">Now What?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/user_interface.html">Aviary User Interface</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/UI_Levels.html">User Interface Levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/examples_of_the_same_mission_at_different_UI_levels.html">Examples of the same mission at different UI levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/aviary_commands.html">Command Line Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/input_files.html">Input Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/drawing_and_running_simple_missions.html">Drawing and running simple missions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/pre_mission_and_mission.html">Pre-Mission and Mission</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/outputs_and_how_to_read_them.html">Outputs and How to Read Them</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/variable_metadata.html">Understanding the Variable Metadata</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/features_and_functionalities.html">Features and Functionalities</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/aerodynamics.html">Aerodynamics Subsystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/external_aero.html">Externally Computed Polars</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/propulsion.html">Propulsion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/hamilton_standard.html">Hamilton Standard Propulsion Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/mass.html">Mass Subsystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/subsystems.html">SubsystemBuilderBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/using_external_subsystems.html">Using external subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/step_by_step_external_guide.html">Step-by-step guide for creating, testing, and using external subsystems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/battery_subsystem_example.html">In-depth look at the battery subsystem as an example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/features/overriding.html">Overriding Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/FLOPS_based_detailed_takeoff_and_landing.html">FLOPS Based Detailed Takeoff and Landing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/reserve_missions.html">Reserve Mission</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/troubleshooting.html">Troubleshooting</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Discussing the Aviary Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simple_mission_example.html">Conventional Aircraft and Simple Mission</a></li>
+<li class="toctree-l1"><a class="reference internal" href="more_advanced_example.html">Optimizing the Mission Profile of a Conventional Aircraft</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Coupled Aircraft-Mission Optimization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="additional_flight_phases.html">Mission Optimization with Many Phases for a Commercial Aircraft</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reserve_missions.html">Reserve Mission Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="OAS_subsystem.html">Using Aviary and OpenAeroStruct Together</a></li>
+<li class="toctree-l1"><a class="reference internal" href="level_2_detailed_takeoff_and_landing.html">Level 2 Detailed Takeoff and Landing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Theory Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../theory_guide/intro.html">Overview of Aviary Functionality</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../theory_guide/underlying_concepts.html">Underlying Concepts</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../theory_guide/assumptions.html">Assumptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory_guide/aerodynamics.html">Core Aerodynamics Subsystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory_guide/geometry.html">Core Geometry Subsystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory_guide/mass.html">Core Mass Subsystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory_guide/mission.html">Mission Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../theory_guide/propulsion.html">Core Propulsion Subsystem</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../theory_guide/optimization_algorithms.html">Optimization Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../theory_guide/validation.html">Validation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/codebase_overview.html">Codebase Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/coding_standards.html">Coding Standards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/unit_tests.html">Unit Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/contributing_guidelines.html">Guidelines for Contributing Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/how_to_contribute_docs.html">How to Contribute Docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer_guide/debugging_env_from_github.html">Using Dev Environments from GitHub Actions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Miscellaneous Resources</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../misc_resources/FAQ.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc_resources/glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc_resources/resources.html">Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc_resources/externally_supported_subsystems.html">Externally Supported Subsystems</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../misc_resources/feature_comparison.html">Feature Comparison with Legacy Codes</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../misc_resources/comparison_to_flops.html">Comparison to FLOPS</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../misc_resources/planned_future_features.html">Planned Future Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_srcdocs/index.html">Source Docs</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/openmdao/Aviary/blob/gh-pages/examples/coupled_aircraft_mission_optimization.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/openmdao/Aviary" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/openmdao/Aviary/issues/new?title=Issue%20on%20page%20%2Fexamples/coupled_aircraft_mission_optimization.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/examples/coupled_aircraft_mission_optimization.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Coupled Aircraft-Mission Optimization</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition-and-explanation">Problem Definition and Explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-mission-profile-fixed-aircraft-wing-aspect-ratio">Fixed Mission Profile, Fixed Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-mission-profile-optimized-aircraft-wing-aspect-ratio">Fixed Mission Profile, Optimized Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimized-mission-profile-fixed-aircraft-wing-aspect-ratio">Optimized Mission Profile, Fixed Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimized-mission-profile-optimized-aircraft-wing-aspect-ratio">Optimized Mission Profile, Optimized Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-takeaways">Summary and Takeaways</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="coupled-aircraft-mission-optimization">
+<h1>Coupled Aircraft-Mission Optimization<a class="headerlink" href="#coupled-aircraft-mission-optimization" title="Link to this heading">#</a></h1>
+<p>One of the most exciting features of Aviary is the ability to formulate and solve coupled aircraft-mission design optimization problems.
+Here, we mean that we are finding the optimal aircraft design parameters while simultaneously finding the optimal mission trajectory.
+The reason why this is so valuable is that it enables exploration of a larger design space much more efficiently.</p>
+<p>Solving coupled design-mission problems leads to optimal designs that would not be findable without simultaneously designing the aircraft and the trajectory.
+This is especially useful for unconventional aircraft designs, operations with complex missions, and many more future-focused studies than what is commonly flying today.</p>
+<p>This doc page builds up a coupled design problem and explains what we’re doing along the way.
+This process is relatively straightforward in Aviary.
+We will briefly discuss the optimal results, but that is not necessarily the focus here.
+Instead, we want to showcase how to do a simple coupled design study in Aviary.</p>
+<p>You can use this as a starting point for your own exciting aircraft and mission design studies.</p>
+<section id="problem-definition-and-explanation">
+<h2>Problem Definition and Explanation<a class="headerlink" href="#problem-definition-and-explanation" title="Link to this heading">#</a></h2>
+<p>We will use a conventional single-aisle commercial aircraft design as our starting point.
+For all of these examples we allow the aircraft to be sized by the optimizer.
+This means the gross takeoff weight is controlled to meet a mass balance.</p>
+<p>We will perform four different optimization cases as part of this study:</p>
+<ul class="simple">
+<li><p>fixed mission profile, fixed aircraft wing aspect ratio</p></li>
+<li><p>fixed mission profile, optimized aircraft wing aspect ratio</p></li>
+<li><p>optimized mission profile, fixed aircraft wing aspect ratio</p></li>
+<li><p>optimized mission profile, optimized aircraft wing aspect ratio</p></li>
+</ul>
+<p>We’ll provide more detail individually for each case.</p>
+<p>When we call Aviary, we will use a common <code class="docutils literal notranslate"><span class="pre">phase_info</span></code> object that we modify for each optimization case shown here:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_info</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;pre_mission&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;include_takeoff&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;optimize_mass&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="s2">&quot;climb_1&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;subsystem_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;core_aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;computed&quot;</span><span class="p">}},</span>
+        <span class="s2">&quot;user_options&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;optimize_mach&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;optimize_altitude&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;polynomial_control_order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;num_segments&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">&quot;solve_for_distance&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;initial_mach&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;final_mach&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;mach_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.18</span><span class="p">,</span> <span class="mf">0.84</span><span class="p">),</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;initial_altitude&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;final_altitude&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">32500.0</span><span class="p">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;altitude_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">33000.0</span><span class="p">),</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;throttle_enforcement&quot;</span><span class="p">:</span> <span class="s2">&quot;path_constraint&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fix_initial&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;constrain_final&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;fix_duration&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;initial_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;duration_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">105.0</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;initial_guesses&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">70</span><span class="p">],</span> <span class="s2">&quot;min&quot;</span><span class="p">)},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;cruise&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;subsystem_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;core_aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;computed&quot;</span><span class="p">}},</span>
+        <span class="s2">&quot;user_options&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;optimize_mach&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;optimize_altitude&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;polynomial_control_order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;num_segments&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">&quot;solve_for_distance&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;initial_mach&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;final_mach&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.80</span><span class="p">,</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;mach_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.84</span><span class="p">),</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;initial_altitude&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">32500.0</span><span class="p">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;final_altitude&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">36000.0</span><span class="p">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;altitude_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">32000.0</span><span class="p">,</span> <span class="mf">36500.0</span><span class="p">),</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;throttle_enforcement&quot;</span><span class="p">:</span> <span class="s2">&quot;boundary_constraint&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fix_initial&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;constrain_final&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;fix_duration&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;initial_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">35.0</span><span class="p">,</span> <span class="mf">105.0</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;duration_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">91.5</span><span class="p">,</span> <span class="mf">274.5</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;initial_guesses&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">([</span><span class="mi">70</span><span class="p">,</span> <span class="mi">183</span><span class="p">],</span> <span class="s2">&quot;min&quot;</span><span class="p">)},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;descent_1&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;subsystem_options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;core_aerodynamics&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;computed&quot;</span><span class="p">}},</span>
+        <span class="s2">&quot;user_options&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;optimize_mach&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;optimize_altitude&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;polynomial_control_order&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;num_segments&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+            <span class="s2">&quot;order&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">&quot;solve_for_distance&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;initial_mach&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.72</span><span class="p">,</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;final_mach&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.21</span><span class="p">,</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;mach_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.19</span><span class="p">,</span> <span class="mf">0.84</span><span class="p">),</span> <span class="s2">&quot;unitless&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;initial_altitude&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">36000.0</span><span class="p">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;final_altitude&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;altitude_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">36500.0</span><span class="p">),</span> <span class="s2">&quot;ft&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;throttle_enforcement&quot;</span><span class="p">:</span> <span class="s2">&quot;path_constraint&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fix_initial&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;constrain_final&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;fix_duration&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="s2">&quot;initial_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">126.5</span><span class="p">,</span> <span class="mf">379.5</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;duration_bounds&quot;</span><span class="p">:</span> <span class="p">((</span><span class="mf">25.0</span><span class="p">,</span> <span class="mf">75.0</span><span class="p">),</span> <span class="s2">&quot;min&quot;</span><span class="p">),</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;initial_guesses&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="p">([</span><span class="mi">253</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span> <span class="s2">&quot;min&quot;</span><span class="p">)},</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;post_mission&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;include_landing&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;constrain_range&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s2">&quot;target_range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2080</span><span class="p">,</span> <span class="s2">&quot;nmi&quot;</span><span class="p">),</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let us explain each case, formulate the Aviary problem, and optimize.
+We’ll discuss the results from each case and explain why they vary.</p>
+</section>
+<section id="fixed-mission-profile-fixed-aircraft-wing-aspect-ratio">
+<h2>Fixed Mission Profile, Fixed Aircraft Wing Aspect Ratio<a class="headerlink" href="#fixed-mission-profile-fixed-aircraft-wing-aspect-ratio" title="Link to this heading">#</a></h2>
+<p>First, let us run Aviary with a simple setup: fly a prescribed mission profile with an unchanged wing design.
+Here we are varying the durations of each of the phases (climb, cruise, and descent) to minimize fuel burn across the mission.
+The altitude and Mach profiles of the mission are fixed because <code class="docutils literal notranslate"><span class="pre">optimize_altitude</span> <span class="pre">=</span> <span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">optimize_mach</span> <span class="pre">=</span> <span class="pre">False</span></code> for each of the phases in the <code class="docutils literal notranslate"><span class="pre">phase_info</span></code> object.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">aviary.api</span> <span class="k">as</span> <span class="nn">av</span>
+
+<span class="n">aircraft_filename</span> <span class="o">=</span> <span class="s1">&#39;models/test_aircraft/aircraft_for_bench_FwFm.csv&#39;</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="s2">&quot;IPOPT&quot;</span>
+<span class="n">make_plots</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">max_iter</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">run_aviary</span><span class="p">(</span><span class="n">aircraft_filename</span><span class="p">,</span> <span class="n">phase_info</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+                     <span class="n">make_plots</span><span class="o">=</span><span class="n">make_plots</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/test/lib/python3.12/site-packages/pyoptsparse/pyOpt_MPI.py:68: UserWarning: mpi4py could not be imported. mpi4py is required to use the parallel gradient analysis and parallel objective analysis for non-gradient based optimizers. Continuing using a dummy MPI module from pyOptSparse.
+  warnings.warn(warn)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/Aviary/Aviary/aviary/subsystems/propulsion/engine_model.py:140: UserWarning: The value of aircraft:engine:wing_locations passed to EngineModel &lt;engine_deck&gt; is type &lt;class &#39;numpy.ndarray&#39;&gt;. Only the first entry in this iterable will be used.
+  warnings.warn(
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:time and cruise:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:time and descent_1:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:mass and cruise:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:mass and descent_1:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:distance and cruise:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:distance and descent_1:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.climb_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.cruise&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.descent_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following variables have been overridden:
+  &#39;aircraft:design:touchdown_mass
+  &#39;aircraft:engine:mass
+  &#39;aircraft:fins:mass
+  &#39;aircraft:fuel:auxiliary_fuel_capacity
+  &#39;aircraft:fuel:fuselage_fuel_capacity
+  &#39;aircraft:fuel:total_capacity
+  &#39;aircraft:fuselage:planform_area
+  &#39;aircraft:fuselage:wetted_area
+  &#39;aircraft:horizontal_tail:wetted_area
+  &#39;aircraft:landing_gear:main_gear_oleo_length
+  &#39;aircraft:landing_gear:nose_gear_oleo_length
+  &#39;aircraft:vertical_tail:wetted_area
+  &#39;aircraft:wing:aspect_ratio
+  &#39;aircraft:wing:control_surface_area
+  &#39;aircraft:wing:wetted_area
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Constraint Report [traj] ---
+    --- climb_1 ---
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- cruise ---
+        [initial] 0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+        [final]   0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- descent_1 ---
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/test/lib/python3.12/site-packages/openmdao/recorders/sqlite_recorder.py:226: UserWarning:The existing case recorder file, dymos_solution.db, is being overwritten.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Full total jacobian for problem &#39;aircraft_for_bench_FwFm&#39; was computed 3 times, taking 0.6359312889999842 seconds.
+Total jacobian shape: (135, 94) 
+
+
+Jacobian shape: (135, 94)  (7.72% nonzero)
+FWD solves: 12   REV solves: 0
+Total colors vs. total size: 12 vs 94  (87.23% improvement)
+
+Sparsity computed using tolerance: 1e-25
+Time to compute sparsity:   0.6359 sec
+Time to compute coloring:   0.0499 sec
+Memory to compute coloring:   0.1250 MB
+Coloring created on: 2024-04-22 22:19:25
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is Ipopt version 3.14.16, running with linear solver MUMPS 5.6.2.
+
+Number of nonzeros in equality constraint Jacobian...:      628
+Number of nonzeros in inequality constraint Jacobian.:      351
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:       94
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:       94
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:       92
+Total number of inequality constraints...............:       42
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:       42
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 2.07e+01 3.55e-02  -5.0 0.00e+00    -  0.00e+00 0.00e+00   0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  10  2.5543127e+00 3.13e-07 1.36e-01  -5.0 2.78e-01    -  4.62e-04 1.00e+00f  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of Iterations....: 17
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.5130306128596946e+00    2.5130306128596946e+00
+Dual infeasibility......:   5.3230779524074347e-09    5.3230779524074347e-09
+Constraint violation....:   2.9103830456733706e-16    2.9103830456733706e-16
+Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
+Complementarity.........:   9.0978597122631025e-08    9.0978597122631025e-08
+Overall NLP error.......:   9.0978597122631025e-08    9.0978597122631025e-08
+
+
+Number of objective function evaluations             = 30
+Number of objective gradient evaluations             = 18
+Number of equality constraint evaluations            = 30
+Number of inequality constraint evaluations          = 30
+Number of equality constraint Jacobian evaluations   = 19
+Number of inequality constraint Jacobian evaluations = 19
+Number of Lagrangian Hessian evaluations             = 0
+Total seconds in IPOPT                               = 10.954
+
+EXIT: Optimal Solution Found.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve run the case successfully, let’s save and print out the fuel burn value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fixed_mission_fixed_wing_fuel_burn</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Mission</span><span class="o">.</span><span class="n">Summary</span><span class="o">.</span><span class="n">FUEL_BURNED</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fixed_mission_fixed_wing_aspect_ratio</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Aircraft</span><span class="o">.</span><span class="n">Wing</span><span class="o">.</span><span class="n">ASPECT_RATIO</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mission fuel burn, kg:&#39;</span><span class="p">,</span> <span class="n">fixed_mission_fixed_wing_fuel_burn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Aspect ratio:&#39;</span><span class="p">,</span> <span class="n">fixed_mission_fixed_wing_aspect_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mission fuel burn, kg: 11398.915115695814
+Aspect ratio: 11.22091
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fixed-mission-profile-optimized-aircraft-wing-aspect-ratio">
+<h2>Fixed Mission Profile, Optimized Aircraft Wing Aspect Ratio<a class="headerlink" href="#fixed-mission-profile-optimized-aircraft-wing-aspect-ratio" title="Link to this heading">#</a></h2>
+<p>Now we will use the exact same <code class="docutils literal notranslate"><span class="pre">phase_info</span></code> object but set up our Aviary problem such that the aspect ratio of the wing is a design variable.
+This means that Aviary is optimizing the wing aspect ratio while flying the same mission profile as above.
+We would expect that by varying the wing aspect ratio, Aviary could find a lower fuel burn value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All of the realistic design tradeoffs associated with varying the wing aspect ratio are not necessarily captured in this problem, e.g. the wing structure would need to change. We are simply using this as an example of an aircraft design variable available in Aviary.</p>
+</div>
+<p>When we want to add an aircraft design variable to the Aviary problem, we need to use the Level 2 interface for Aviary.
+This means we can no longer use the all-inclusive <code class="docutils literal notranslate"><span class="pre">run_aviary</span></code> function and instead need to call its constituent methods individually.
+This allows us to insert a line adding the wing aspect ratio as a design variable as shown below.
+This line is highlighted with an in-line comment.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">AviaryProblem</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">AnalysisScheme</span><span class="o">.</span><span class="n">COLLOCATION</span><span class="p">)</span>
+
+<span class="c1"># Load aircraft and options data from user</span>
+<span class="c1"># Allow for user overrides here</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">load_inputs</span><span class="p">(</span><span class="n">aircraft_filename</span><span class="p">,</span> <span class="n">phase_info</span><span class="p">)</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">check_and_preprocess_inputs</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_pre_mission_systems</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_phases</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_post_mission_systems</span><span class="p">()</span>
+
+<span class="c1"># Link phases and variables</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">link_phases</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_driver</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_design_variables</span><span class="p">()</span>
+
+<span class="c1"># The following line is an example of how to add a design variable for the aspect ratio of the wing</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_design_var</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Aircraft</span><span class="o">.</span><span class="n">Wing</span><span class="o">.</span><span class="n">ASPECT_RATIO</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">14.</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="mf">12.</span><span class="p">)</span>
+
+<span class="c1"># Load optimization problem formulation</span>
+<span class="c1"># Detail which variables the optimizer can control</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">add_objective</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">set_initial_guesses</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">run_aviary_problem</span><span class="p">(</span><span class="n">make_plots</span><span class="o">=</span><span class="n">make_plots</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following variables have been overridden:
+  &#39;aircraft:design:touchdown_mass
+  &#39;aircraft:engine:mass
+  &#39;aircraft:fins:mass
+  &#39;aircraft:fuel:auxiliary_fuel_capacity
+  &#39;aircraft:fuel:fuselage_fuel_capacity
+  &#39;aircraft:fuel:total_capacity
+  &#39;aircraft:fuselage:planform_area
+  &#39;aircraft:fuselage:wetted_area
+  &#39;aircraft:horizontal_tail:wetted_area
+  &#39;aircraft:landing_gear:main_gear_oleo_length
+  &#39;aircraft:landing_gear:nose_gear_oleo_length
+  &#39;aircraft:vertical_tail:wetted_area
+  &#39;aircraft:wing:aspect_ratio
+  &#39;aircraft:wing:control_surface_area
+  &#39;aircraft:wing:wetted_area
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/Aviary/Aviary/aviary/subsystems/propulsion/engine_model.py:140: UserWarning: The value of aircraft:engine:wing_locations passed to EngineModel &lt;engine_deck&gt; is type &lt;class &#39;numpy.ndarray&#39;&gt;. Only the first entry in this iterable will be used.
+  warnings.warn(
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:time and cruise:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:time and descent_1:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:mass and cruise:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:mass and descent_1:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:distance and cruise:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:distance and descent_1:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.climb_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.cruise&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.descent_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Constraint Report [traj] ---
+    --- climb_1 ---
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- cruise ---
+        [initial] 0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+        [final]   0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- descent_1 ---
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Full total jacobian for problem &#39;problem&#39; was computed 3 times, taking 0.6744605079999815 seconds.
+Total jacobian shape: (135, 95) 
+
+
+Jacobian shape: (135, 95)  (8.44% nonzero)
+FWD solves: 13   REV solves: 0
+Total colors vs. total size: 13 vs 95  (86.32% improvement)
+
+Sparsity computed using tolerance: 1e-25
+Time to compute sparsity:   0.6745 sec
+Time to compute coloring:   0.0554 sec
+Memory to compute coloring:   0.0000 MB
+Coloring created on: 2024-04-22 22:19:45
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is Ipopt version 3.14.16, running with linear solver MUMPS 5.6.2.
+
+Number of nonzeros in equality constraint Jacobian...:      686
+Number of nonzeros in inequality constraint Jacobian.:      396
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:       95
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:       95
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:       92
+Total number of inequality constraints...............:       42
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:       42
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 2.07e+01 7.93e-02  -5.0 0.00e+00    -  0.00e+00 0.00e+00   0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  10  2.3355318e+00 6.14e-05 1.10e+00  -5.0 1.28e+00    -  4.42e-01 1.00e+00h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of Iterations....: 19
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.3028613407812926e+00    2.3028613407812926e+00
+Dual infeasibility......:   1.2260386039741888e-09    1.2260386039741888e-09
+Constraint violation....:   2.9103830456733706e-16    2.9103830456733706e-16
+Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
+Complementarity.........:   9.0998904317480220e-08    9.0998904317480220e-08
+Overall NLP error.......:   9.0998904317480220e-08    9.0998904317480220e-08
+
+
+Number of objective function evaluations             = 24
+Number of objective gradient evaluations             = 20
+Number of equality constraint evaluations            = 24
+Number of inequality constraint evaluations          = 24
+Number of equality constraint Jacobian evaluations   = 21
+Number of inequality constraint Jacobian evaluations = 21
+Number of Lagrangian Hessian evaluations             = 0
+Total seconds in IPOPT                               = 8.311
+
+EXIT: Optimal Solution Found.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fixed_mission_optimized_wing_fuel_burn</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Mission</span><span class="o">.</span><span class="n">Summary</span><span class="o">.</span><span class="n">FUEL_BURNED</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fixed_mission_optimized_wing_aspect_ratio</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Aircraft</span><span class="o">.</span><span class="n">Wing</span><span class="o">.</span><span class="n">ASPECT_RATIO</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mission fuel burn, kg:&#39;</span><span class="p">,</span> <span class="n">fixed_mission_optimized_wing_fuel_burn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Aspect ratio:&#39;</span><span class="p">,</span> <span class="n">fixed_mission_optimized_wing_aspect_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mission fuel burn, kg: 10445.603333463641
+Aspect ratio: 13.99999830092347
+</pre></div>
+</div>
+</div>
+</div>
+<p>As expected, the optimal fuel burn value is lower for this case.
+We’ll discuss this in more detail after running two more cases.</p>
+</section>
+<section id="optimized-mission-profile-fixed-aircraft-wing-aspect-ratio">
+<h2>Optimized Mission Profile, Fixed Aircraft Wing Aspect Ratio<a class="headerlink" href="#optimized-mission-profile-fixed-aircraft-wing-aspect-ratio" title="Link to this heading">#</a></h2>
+<p>We just investigated giving the optimizer flexibility with the aircraft design while not varying the mission.
+Let’s now look at the results when we optimize the mission but keep the wing aspect ratio unchanged.</p>
+<p>To do this, we will allow the optimizer to control the Mach and altitude profiles by modifying the <code class="docutils literal notranslate"><span class="pre">phase_info</span></code> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;climb_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_mach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;climb_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_altitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;cruise&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_mach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;cruise&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_altitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;descent_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_mach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;descent_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_altitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">run_aviary</span><span class="p">(</span><span class="n">aircraft_filename</span><span class="p">,</span> <span class="n">phase_info</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+                     <span class="n">make_plots</span><span class="o">=</span><span class="n">make_plots</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following variables have been overridden:
+  &#39;aircraft:design:touchdown_mass
+  &#39;aircraft:engine:mass
+  &#39;aircraft:fins:mass
+  &#39;aircraft:fuel:auxiliary_fuel_capacity
+  &#39;aircraft:fuel:fuselage_fuel_capacity
+  &#39;aircraft:fuel:total_capacity
+  &#39;aircraft:fuselage:planform_area
+  &#39;aircraft:fuselage:wetted_area
+  &#39;aircraft:horizontal_tail:wetted_area
+  &#39;aircraft:landing_gear:main_gear_oleo_length
+  &#39;aircraft:landing_gear:nose_gear_oleo_length
+  &#39;aircraft:vertical_tail:wetted_area
+  &#39;aircraft:wing:aspect_ratio
+  &#39;aircraft:wing:control_surface_area
+  &#39;aircraft:wing:wetted_area
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/Aviary/Aviary/aviary/subsystems/propulsion/engine_model.py:140: UserWarning: The value of aircraft:engine:wing_locations passed to EngineModel &lt;engine_deck&gt; is type &lt;class &#39;numpy.ndarray&#39;&gt;. Only the first entry in this iterable will be used.
+  warnings.warn(
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:time and cruise:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:time and descent_1:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:mass and cruise:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:mass and descent_1:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:distance and cruise:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:distance and descent_1:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.climb_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.cruise&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.descent_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Constraint Report [traj] ---
+    --- climb_1 ---
+        [initial] 2.0000e-01 == mach [unitless]
+        [initial] 0.0000e+00 == altitude [ft]
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- cruise ---
+        [initial] 0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+        [final]   0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- descent_1 ---
+        [final]   2.1000e-01 == mach [unitless]
+        [final]   0.0000e+00 == altitude [ft]
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/test/lib/python3.12/site-packages/openmdao/recorders/sqlite_recorder.py:226: UserWarning:The existing case recorder file, dymos_solution.db, is being overwritten.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Full total jacobian for problem &#39;aircraft_for_bench_FwFm&#39; was computed 3 times, taking 0.6894043850000457 seconds.
+Total jacobian shape: (143, 106) 
+
+
+Jacobian shape: (143, 106)  (9.63% nonzero)
+FWD solves: 17   REV solves: 0
+Total colors vs. total size: 17 vs 106  (83.96% improvement)
+
+Sparsity computed using tolerance: 1e-25
+Time to compute sparsity:   0.6894 sec
+Time to compute coloring:   0.0661 sec
+Memory to compute coloring:   0.0000 MB
+Coloring created on: 2024-04-22 22:20:02
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is Ipopt version 3.14.16, running with linear solver MUMPS 5.6.2.
+
+Number of nonzeros in equality constraint Jacobian...:      895
+Number of nonzeros in inequality constraint Jacobian.:      564
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:      106
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:      106
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      100
+Total number of inequality constraints...............:       42
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:       42
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 2.07e+01 8.41e-02  -5.0 0.00e+00    -  0.00e+00 0.00e+00   0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  10  2.9375313e-01 1.90e+01 1.49e+00  -5.0 3.53e+00    -  5.26e-07 3.37e-03h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  20  2.5333075e+00 2.51e-05 2.41e-01  -5.0 9.17e-02    -  5.41e-01 9.39e-01h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  30  2.4815144e+00 5.82e-08 4.06e-03  -5.0 4.28e-03    -  1.00e+00 1.00e+00h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of Iterations....: 36
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.4814319148074575e+00    2.4814319148074575e+00
+Dual infeasibility......:   6.6791151836005428e-07    6.6791151836005428e-07
+Constraint violation....:   2.7151109745124873e-11    2.7151109745124873e-11
+Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
+Complementarity.........:   9.0909091796033301e-08    9.0909091796033301e-08
+Overall NLP error.......:   6.6791151836005428e-07    6.6791151836005428e-07
+
+
+Number of objective function evaluations             = 45
+Number of objective gradient evaluations             = 37
+Number of equality constraint evaluations            = 45
+Number of inequality constraint evaluations          = 45
+Number of equality constraint Jacobian evaluations   = 38
+Number of inequality constraint Jacobian evaluations = 38
+Number of Lagrangian Hessian evaluations             = 0
+Total seconds in IPOPT                               = 18.657
+
+EXIT: Optimal Solution Found.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;climb_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_mach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;climb_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_altitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;cruise&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_mach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;cruise&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_altitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;descent_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_mach&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">phase_info</span><span class="p">[</span><span class="s1">&#39;descent_1&#39;</span><span class="p">][</span><span class="s1">&#39;user_options&#39;</span><span class="p">][</span><span class="s1">&#39;optimize_altitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">prob</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">run_aviary</span><span class="p">(</span><span class="n">aircraft_filename</span><span class="p">,</span> <span class="n">phase_info</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span>
+                     <span class="n">make_plots</span><span class="o">=</span><span class="n">make_plots</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/Aviary/Aviary/aviary/subsystems/propulsion/engine_model.py:140: UserWarning: The value of aircraft:engine:wing_locations passed to EngineModel &lt;engine_deck&gt; is type &lt;class &#39;numpy.ndarray&#39;&gt;. Only the first entry in this iterable will be used.
+  warnings.warn(
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:time and cruise:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:time and descent_1:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:mass and cruise:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:mass and descent_1:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:distance and cruise:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:distance and descent_1:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.climb_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.cruise&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.descent_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following variables have been overridden:
+  &#39;aircraft:design:touchdown_mass
+  &#39;aircraft:engine:mass
+  &#39;aircraft:fins:mass
+  &#39;aircraft:fuel:auxiliary_fuel_capacity
+  &#39;aircraft:fuel:fuselage_fuel_capacity
+  &#39;aircraft:fuel:total_capacity
+  &#39;aircraft:fuselage:planform_area
+  &#39;aircraft:fuselage:wetted_area
+  &#39;aircraft:horizontal_tail:wetted_area
+  &#39;aircraft:landing_gear:main_gear_oleo_length
+  &#39;aircraft:landing_gear:nose_gear_oleo_length
+  &#39;aircraft:vertical_tail:wetted_area
+  &#39;aircraft:wing:aspect_ratio
+  &#39;aircraft:wing:control_surface_area
+  &#39;aircraft:wing:wetted_area
+
+--- Constraint Report [traj] ---
+    --- climb_1 ---
+        [initial] 2.0000e-01 == mach [unitless]
+        [initial] 0.0000e+00 == altitude [ft]
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- cruise ---
+        [initial] 0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+        [final]   0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- descent_1 ---
+        [final]   2.1000e-01 == mach [unitless]
+        [final]   0.0000e+00 == altitude [ft]
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/test/lib/python3.12/site-packages/openmdao/recorders/sqlite_recorder.py:226: UserWarning:The existing case recorder file, dymos_solution.db, is being overwritten.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Full total jacobian for problem &#39;aircraft_for_bench_FwFm&#39; was computed 3 times, taking 0.6936849969999912 seconds.
+Total jacobian shape: (143, 106) 
+
+
+Jacobian shape: (143, 106)  (9.63% nonzero)
+FWD solves: 17   REV solves: 0
+Total colors vs. total size: 17 vs 106  (83.96% improvement)
+
+Sparsity computed using tolerance: 1e-25
+Time to compute sparsity:   0.6937 sec
+Time to compute coloring:   0.0594 sec
+Memory to compute coloring:   0.0000 MB
+Coloring created on: 2024-04-22 22:20:29
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is Ipopt version 3.14.16, running with linear solver MUMPS 5.6.2.
+
+Number of nonzeros in equality constraint Jacobian...:      895
+Number of nonzeros in inequality constraint Jacobian.:      564
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:      106
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:      106
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      100
+Total number of inequality constraints...............:       42
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:       42
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 2.07e+01 8.41e-02  -5.0 0.00e+00    -  0.00e+00 0.00e+00   0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  10  2.9375313e-01 1.90e+01 1.49e+00  -5.0 3.53e+00    -  5.26e-07 3.37e-03h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  20  2.5333075e+00 2.51e-05 2.41e-01  -5.0 9.17e-02    -  5.41e-01 9.39e-01h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  30  2.4815144e+00 5.82e-08 4.06e-03  -5.0 4.28e-03    -  1.00e+00 1.00e+00h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of Iterations....: 36
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.4814319148074575e+00    2.4814319148074575e+00
+Dual infeasibility......:   6.6791151836005428e-07    6.6791151836005428e-07
+Constraint violation....:   2.7151109745124873e-11    2.7151109745124873e-11
+Variable bound violation:   0.0000000000000000e+00    0.0000000000000000e+00
+Complementarity.........:   9.0909091796033301e-08    9.0909091796033301e-08
+Overall NLP error.......:   6.6791151836005428e-07    6.6791151836005428e-07
+
+
+Number of objective function evaluations             = 45
+Number of objective gradient evaluations             = 37
+Number of equality constraint evaluations            = 45
+Number of inequality constraint evaluations          = 45
+Number of equality constraint Jacobian evaluations   = 38
+Number of inequality constraint Jacobian evaluations = 38
+Number of Lagrangian Hessian evaluations             = 0
+Total seconds in IPOPT                               = 18.809
+
+EXIT: Optimal Solution Found.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s see the fuel burn:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized_mission_fixed_wing_fuel_burn</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Mission</span><span class="o">.</span><span class="n">Summary</span><span class="o">.</span><span class="n">FUEL_BURNED</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">optimized_mission_fixed_wing_aspect_ratio</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Aircraft</span><span class="o">.</span><span class="n">Wing</span><span class="o">.</span><span class="n">ASPECT_RATIO</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mission fuel burn, kg:&#39;</span><span class="p">,</span> <span class="n">optimized_mission_fixed_wing_fuel_burn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Aspect ratio:&#39;</span><span class="p">,</span> <span class="n">optimized_mission_fixed_wing_aspect_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mission fuel burn, kg: 11255.585832311528
+Aspect ratio: 11.22091
+</pre></div>
+</div>
+</div>
+</div>
+<p>Optimizing the mission did not have nearly as large of an impact on the fuel burn as optimizing the aspect ratio did.
+However, the fuel burn still decreased.
+Let us now look at the fully coupled case.</p>
+</section>
+<section id="optimized-mission-profile-optimized-aircraft-wing-aspect-ratio">
+<h2>Optimized Mission Profile, Optimized Aircraft Wing Aspect Ratio<a class="headerlink" href="#optimized-mission-profile-optimized-aircraft-wing-aspect-ratio" title="Link to this heading">#</a></h2>
+<p>Remember we have already modified the <code class="docutils literal notranslate"><span class="pre">phase_info</span></code> object so that the Mach and altitude profiles are optimized.
+Now we return to the Level 2 way of running the problem with the wing aspect ratio as a design variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">prob</span> <span class="o">=</span> <span class="n">av</span><span class="o">.</span><span class="n">AviaryProblem</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">AnalysisScheme</span><span class="o">.</span><span class="n">COLLOCATION</span><span class="p">)</span>
+
+<span class="c1"># Load aircraft and options data from user</span>
+<span class="c1"># Allow for user overrides here</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">load_inputs</span><span class="p">(</span><span class="n">aircraft_filename</span><span class="p">,</span> <span class="n">phase_info</span><span class="p">)</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">check_and_preprocess_inputs</span><span class="p">()</span>
+<span class="c1"># Preprocess inputs</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">add_pre_mission_systems</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_phases</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_post_mission_systems</span><span class="p">()</span>
+
+<span class="c1"># Link phases and variables</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">link_phases</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_driver</span><span class="p">(</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">add_design_variables</span><span class="p">()</span>
+
+<span class="c1"># prob.model.add_design_var(av.Aircraft.Engine.SCALED_SLS_THRUST, lower=25.e3, upper=30.e3, units=&#39;lbf&#39;, ref=28.e3)</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">add_design_var</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Aircraft</span><span class="o">.</span><span class="n">Wing</span><span class="o">.</span><span class="n">ASPECT_RATIO</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="mf">10.</span><span class="p">,</span> <span class="n">upper</span><span class="o">=</span><span class="mf">14.</span><span class="p">,</span> <span class="n">ref</span><span class="o">=</span><span class="mf">12.</span><span class="p">)</span>
+
+<span class="c1"># Load optimization problem formulation</span>
+<span class="c1"># Detail which variables the optimizer can control</span>
+<span class="n">prob</span><span class="o">.</span><span class="n">add_objective</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">set_initial_guesses</span><span class="p">()</span>
+
+<span class="n">prob</span><span class="o">.</span><span class="n">run_aviary_problem</span><span class="p">(</span><span class="n">make_plots</span><span class="o">=</span><span class="n">make_plots</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The following variables have been overridden:
+  &#39;aircraft:design:touchdown_mass
+  &#39;aircraft:engine:mass
+  &#39;aircraft:fins:mass
+  &#39;aircraft:fuel:auxiliary_fuel_capacity
+  &#39;aircraft:fuel:fuselage_fuel_capacity
+  &#39;aircraft:fuel:total_capacity
+  &#39;aircraft:fuselage:planform_area
+  &#39;aircraft:fuselage:wetted_area
+  &#39;aircraft:horizontal_tail:wetted_area
+  &#39;aircraft:landing_gear:main_gear_oleo_length
+  &#39;aircraft:landing_gear:nose_gear_oleo_length
+  &#39;aircraft:vertical_tail:wetted_area
+  &#39;aircraft:wing:aspect_ratio
+  &#39;aircraft:wing:control_surface_area
+  &#39;aircraft:wing:wetted_area
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/Aviary/Aviary/aviary/subsystems/propulsion/engine_model.py:140: UserWarning: The value of aircraft:engine:wing_locations passed to EngineModel &lt;engine_deck&gt; is type &lt;class &#39;numpy.ndarray&#39;&gt;. Only the first entry in this iterable will be used.
+  warnings.warn(
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:time and cruise:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:time and descent_1:time in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:mass and cruise:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:mass and descent_1:mass in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between climb_1:distance and cruise:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/trajectory/trajectory.py:1202: UnusedOptionWarning:Invalid option in linkage between cruise:distance and descent_1:distance in trajectory traj. The following options for add_linkage_constraint were specified but not valid when option &#39;connected&#39; is True: ref
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.climb_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.cruise&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+/usr/share/miniconda/envs/test/lib/python3.12/site-packages/dymos/phase/phase.py:1973: UserWarning: Phase time options have no effect because fix_initial=True or input_initial=True for phase &#39;traj.phases.descent_1&#39;: initial_ref
+  warnings.warn(f&#39;Phase time options have no effect because fix_initial=True &#39;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Constraint Report [traj] ---
+    --- climb_1 ---
+        [initial] 2.0000e-01 == mach [unitless]
+        [initial] 0.0000e+00 == altitude [ft]
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- cruise ---
+        [initial] 0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+        [final]   0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+    --- descent_1 ---
+        [final]   2.1000e-01 == mach [unitless]
+        [final]   0.0000e+00 == altitude [ft]
+        [path]    0.0000e+00 &lt;= throttle &lt;= 1.0000e+00  [unitless]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/usr/share/miniconda/envs/test/lib/python3.12/site-packages/openmdao/recorders/sqlite_recorder.py:226: UserWarning:The existing case recorder file, aviary_history.db, is being overwritten.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model viewer data has already been recorded for Driver.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Full total jacobian for problem &#39;problem&#39; was computed 3 times, taking 0.7087514820000251 seconds.
+Total jacobian shape: (143, 107) 
+
+
+Jacobian shape: (143, 107)  (10.40% nonzero)
+FWD solves: 18   REV solves: 0
+Total colors vs. total size: 18 vs 107  (83.18% improvement)
+
+Sparsity computed using tolerance: 1e-25
+Time to compute sparsity:   0.7088 sec
+Time to compute coloring:   0.0654 sec
+Memory to compute coloring:   0.0000 MB
+Coloring created on: 2024-04-22 22:20:57
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>This is Ipopt version 3.14.16, running with linear solver MUMPS 5.6.2.
+
+Number of nonzeros in equality constraint Jacobian...:      921
+Number of nonzeros in inequality constraint Jacobian.:      669
+Number of nonzeros in Lagrangian Hessian.............:        0
+
+Total number of variables............................:      107
+                     variables with only lower bounds:        0
+                variables with lower and upper bounds:      107
+                     variables with only upper bounds:        0
+Total number of equality constraints.................:      100
+Total number of inequality constraints...............:       42
+        inequality constraints with only lower bounds:        0
+   inequality constraints with lower and upper bounds:       42
+        inequality constraints with only upper bounds:        0
+
+iter    objective    inf_pr   inf_du lg(mu)  ||d||  lg(rg) alpha_du alpha_pr  ls
+   0  0.0000000e+00 2.07e+01 8.65e-02  -5.0 0.00e+00    -  0.00e+00 0.00e+00   0
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  10  1.4912556e-01 1.90e+01 1.09e+00  -5.0 3.54e+00    -  2.56e-03 3.48e-03h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  20  7.8606356e-01 1.27e+01 1.18e+00  -5.0 2.41e+00    -  3.34e-02 2.18e-02h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  30  2.2831122e+00 2.31e-02 1.83e-01  -5.0 1.18e-01    -  4.88e-01 1.00e+00h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  40  2.2718504e+00 2.20e-08 1.07e-03  -5.0 9.79e-04    -  1.00e+00 1.00e+00h  1
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of Iterations....: 49
+
+                                   (scaled)                 (unscaled)
+Objective...............:   2.2716786649737539e+00    2.2716786649737539e+00
+Dual infeasibility......:   9.5039106987826786e-07    9.5039106987826786e-07
+Constraint violation....:   1.9246811861810724e-10    1.9246811861810724e-10
+Variable bound violation:  4.4501477170144028e-308   4.4501477170144028e-308
+Complementarity.........:   9.0909090913784576e-08    9.0909090913784576e-08
+Overall NLP error.......:   9.5039106987826786e-07    9.5039106987826786e-07
+
+
+Number of objective function evaluations             = 54
+Number of objective gradient evaluations             = 50
+Number of equality constraint evaluations            = 54
+Number of inequality constraint evaluations          = 54
+Number of equality constraint Jacobian evaluations   = 50
+Number of inequality constraint Jacobian evaluations = 50
+Number of Lagrangian Hessian evaluations             = 0
+Total seconds in IPOPT                               = 19.180
+
+EXIT: Optimal Solution Found.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>All right, let’s check out this final case’s fuel burn value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimized_mission_optimized_wing_fuel_burn</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Mission</span><span class="o">.</span><span class="n">Summary</span><span class="o">.</span><span class="n">FUEL_BURNED</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s1">&#39;kg&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">optimized_mission_optimized_wing_aspect_ratio</span> <span class="o">=</span> <span class="n">prob</span><span class="o">.</span><span class="n">get_val</span><span class="p">(</span><span class="n">av</span><span class="o">.</span><span class="n">Aircraft</span><span class="o">.</span><span class="n">Wing</span><span class="o">.</span><span class="n">ASPECT_RATIO</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mission fuel burn, kg:&#39;</span><span class="p">,</span> <span class="n">optimized_mission_optimized_wing_fuel_burn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Aspect ratio:&#39;</span><span class="p">,</span> <span class="n">optimized_mission_optimized_wing_aspect_ratio</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mission fuel burn, kg: 10304.16109523881
+Aspect ratio: 13.999998590641312
+</pre></div>
+</div>
+</div>
+</div>
+<p>Cool, it’s the lowest yet!
+Let’s discuss these results in more detail now.</p>
+</section>
+<section id="summary-and-takeaways">
+<h2>Summary and Takeaways<a class="headerlink" href="#summary-and-takeaways" title="Link to this heading">#</a></h2>
+<p>We have showcased one of Aviary’s most powerful capabilities here – the ability to simultaneously design an aircraft and optimal trajectory.
+By building up problem complexity, we can see how optimizing different parts of the problem lead to optimization objective improvements.</p>
+<p>Here is a summary table of the results:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Create a dictionary with the data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Case&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Fixed Mission, Fixed Wing&#39;</span><span class="p">,</span> <span class="s1">&#39;Fixed Mission, Optimized Wing&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimized Mission, Fixed Wing&#39;</span><span class="p">,</span> <span class="s1">&#39;Optimized Mission, Optimized Wing&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Optimize Mission&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;✓&#39;</span><span class="p">,</span> <span class="s1">&#39;✓&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Optimize Wing&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;✓&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;✓&#39;</span><span class="p">],</span>
+    <span class="s1">&#39;Aspect Ratio&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">fixed_mission_fixed_wing_aspect_ratio</span><span class="p">,</span> <span class="n">fixed_mission_optimized_wing_aspect_ratio</span><span class="p">,</span> <span class="n">optimized_mission_fixed_wing_aspect_ratio</span><span class="p">,</span> <span class="n">optimized_mission_optimized_wing_aspect_ratio</span><span class="p">],</span>
+    <span class="s1">&#39;Fuel Burn Value&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">fixed_mission_fixed_wing_fuel_burn</span><span class="p">,</span> <span class="n">fixed_mission_optimized_wing_fuel_burn</span><span class="p">,</span> <span class="n">optimized_mission_fixed_wing_fuel_burn</span><span class="p">,</span> <span class="n">optimized_mission_optimized_wing_fuel_burn</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Create a DataFrame from the dictionary</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Display the DataFrame</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Case</th>
+      <th>Optimize Mission</th>
+      <th>Optimize Wing</th>
+      <th>Aspect Ratio</th>
+      <th>Fuel Burn Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Fixed Mission, Fixed Wing</td>
+      <td>-</td>
+      <td>-</td>
+      <td>11.22</td>
+      <td>11398.92</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Fixed Mission, Optimized Wing</td>
+      <td>-</td>
+      <td>✓</td>
+      <td>14.00</td>
+      <td>10445.60</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Optimized Mission, Fixed Wing</td>
+      <td>✓</td>
+      <td>-</td>
+      <td>11.22</td>
+      <td>11255.59</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Optimized Mission, Optimized Wing</td>
+      <td>✓</td>
+      <td>✓</td>
+      <td>14.00</td>
+      <td>10304.16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We see that the fully coupled case finds the lowest fuel burn value, as expected.
+In both cases where the wing aspect ratio is optimized, it moves to the higher bound.</p>
+<p>If we didn’t simultaneously design the aircraft and the mission, you would have to manually iterate by first optimizing the aircraft, then the mission, then the aircraft again, etc.
+This cumbersome process is known as sequential optimization and can lead to non-optimal results for coupled systems, as detailed in Section 13.1 of the <a class="reference external" href="https://flowlab.groups.et.byu.net/mdobook.pdf">Engineering Design Optimization textbook</a> (available for free).</p>
+<p>Aviary is unique in its ability to solve these coupled systems using efficient gradient-based optimization.</p>
+<p>This doc page contains a simple example, but the true power of coupled multidisciplinary optimization lies in solving more complex design problems.
+We hope that you can effectively use Aviary to optimally design the next generation of exciting aircraft!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./examples"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="more_advanced_example.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Optimizing the Mission Profile of a Conventional Aircraft</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="additional_flight_phases.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Mission Optimization with Many Phases for a Commercial Aircraft</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-definition-and-explanation">Problem Definition and Explanation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-mission-profile-fixed-aircraft-wing-aspect-ratio">Fixed Mission Profile, Fixed Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-mission-profile-optimized-aircraft-wing-aspect-ratio">Fixed Mission Profile, Optimized Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimized-mission-profile-fixed-aircraft-wing-aspect-ratio">Optimized Mission Profile, Fixed Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#optimized-mission-profile-optimized-aircraft-wing-aspect-ratio">Optimized Mission Profile, Optimized Aircraft Wing Aspect Ratio</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-takeaways">Summary and Takeaways</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aviary team at NASA
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
