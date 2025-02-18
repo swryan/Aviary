@@ -28,7 +28,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        fetch-tags: true
+        with:
+          fetch-tags: true
 
       - name: Get tags
         run: |
