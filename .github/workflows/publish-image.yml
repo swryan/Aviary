@@ -29,6 +29,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - run: |
+          git fetch --prune --unshallow --tags
           git describe --tags > tag.txt
           echo "TAG=$(cat tag.txt)" >> $GITHUB_ENV
 
