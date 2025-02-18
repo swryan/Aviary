@@ -28,8 +28,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - run: |
-          git fetch --tags
+        fetch-tags: true
+
+      - name: Get tags
+        run: |
           git describe --tags > tag.txt
           cat tag.txt
           echo "TAG=$(cat tag.txt)" >> $GITHUB_ENV
