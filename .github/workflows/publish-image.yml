@@ -33,8 +33,9 @@ jobs:
 
       - name: Get tags
         run: |
+          git fetch --tags
+          git describe --tags
           git describe --tags > tag.txt
-          cat tag.txt
           echo "TAG=$(cat tag.txt)" >> $GITHUB_ENV
 
       # Login against the registry
