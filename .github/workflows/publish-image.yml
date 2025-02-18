@@ -33,7 +33,7 @@ jobs:
 
       - name: Get tags
         run: |
-          git fetch --tags
+          git fetch --unshallow --tags
           git describe --tags
           git describe --tags > tag.txt
           echo "TAG=$(cat tag.txt)" >> $GITHUB_ENV
