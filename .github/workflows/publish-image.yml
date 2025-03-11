@@ -1,4 +1,4 @@
-name: Publish Image
+name: Publish Images
 
 on:
   release:
@@ -14,9 +14,15 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
 
-    runs-on: ubuntu-latest
+  build_image:
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, ubuntu-24.04-arm]
+
+    runs-on: ${{ matrix.OS }}
+
     permissions:
       contents: read
       packages: write
@@ -38,8 +44,7 @@ jobs:
           git describe --tags > tag.txt
           echo "TAG=$(cat tag.txt)" >> $GITHUB_ENV
 
-      # Login against the registry
-      # https://github.com/docker/login-action
+      # Login to container registry
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
         with:
