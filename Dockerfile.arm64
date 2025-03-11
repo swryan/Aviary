@@ -63,8 +63,7 @@ RUN source $HOME/miniforge3/etc/profile.d/conda.sh ;\
     ls -l ../source ;\
     cmake ../source -DVTK_WRAP_PYTHON=ON;\
     make ;\
-    sudo make install ;\
-    rm VTK-9.4.1.tar.gz
+    sudo make install
 
 # Build and Install OpenVSP (based on script from Irian Ordaz @ LARC)
 RUN source $HOME/miniforge3/etc/profile.d/conda.sh ;\
