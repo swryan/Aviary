@@ -19,7 +19,14 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, ubuntu-24.04-arm]
+        include:
+          - NAME: ubuntu
+            OS: ubuntu-24.04
+            FILE: Dockerfile
+
+          - NAME: ubuntu-arm
+            OS: ubuntu-24.04-arm
+            FILE: Dockerfile.arm64
 
     runs-on: ${{ matrix.OS }}
 
