@@ -18,6 +18,9 @@ jobs:
   build_image:
 
     strategy:
+
+      fail-fast: false
+
       matrix:
         include:
           - NAME: ubuntu
@@ -73,6 +76,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
+          file: ${{ matrix.FILE }}
           context: ${{ inputs.image_name }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
