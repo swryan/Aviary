@@ -64,7 +64,8 @@ def AeroDataConverter(input_file=None, output_file=None, data_format=None):
             file2 = path / name + '_aviary_CD0' + suffix
             output_file = [file1, file2]
 
-    stamp = f'# {data_format.value}-derived aerodynamics data converted from {data_file.name}'
+    stamp = f'# {
+        data_format.value}-derived aerodynamics data converted from {data_file.name}'
 
     if data_format is CodeOrigin.GASP:
         data, comments = _load_gasp_aero_table(data_file)

@@ -141,7 +141,8 @@ def assert_metadata_alphabetization(metadata_variables_list):
 
     if out_of_order_vars:
         raise ValueError(
-            f"The variable(s) {out_of_order_vars} in the metadata are out of alphabetical order with their previous value."
+            f"The variable(s) {
+                out_of_order_vars} in the metadata are out of alphabetical order with their previous value."
         )
 
 
@@ -184,7 +185,8 @@ def assert_match_varnames(system, MetaData=None, exclude_inputs=None, exclude_ou
             diff = diff - exclude_inputs
         if len(diff) > 0:
             raise ValueError(
-                f"The inputs {diff} in the provided subsystem are not found in the provided variable structure."
+                f"The inputs {
+                    diff} in the provided subsystem are not found in the provided variable structure."
             )
 
     if output_overlap != sys_outputs:
@@ -193,7 +195,8 @@ def assert_match_varnames(system, MetaData=None, exclude_inputs=None, exclude_ou
             diff = diff - exclude_outputs
         if len(diff) > 0:
             raise ValueError(
-                f"The outputs {diff} in the provided subsystem are not found in the provided variable structure."
+                f"The outputs {
+                    diff} in the provided subsystem are not found in the provided variable structure."
             )
 
 

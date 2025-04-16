@@ -34,8 +34,6 @@ elif OPTIMIZER != 'SNOPT':
         'run_2dof_reserve_mission_multiphase.py': reason
     })
 
-
-
 def find_examples():
     """
     Find and return a list of run scripts in the specified directory.
