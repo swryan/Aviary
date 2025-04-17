@@ -171,16 +171,16 @@ def quad3d_to_triangle_entities(quad):
     """
     vertices = quad.vertices
     entities = f"""
-            <a-triangle color="white"
-            vertex-a="{vertices[0]}"
-            vertex-b="{vertices[1]}"
-            vertex-c="{vertices[2]}"
+            <a-triangle color="white" 
+            vertex-a="{vertices[0]}" 
+            vertex-b="{vertices[1]}" 
+            vertex-c="{vertices[2]}" 
             material="side: double"></a-triangle>
 
-            <a-triangle color="white"
-            vertex-a="{vertices[2]}"
-            vertex-b="{vertices[3]}"
-            vertex-c="{vertices[0]}"
+            <a-triangle color="white" 
+            vertex-a="{vertices[2]}" 
+            vertex-b="{vertices[3]}" 
+            vertex-c="{vertices[0]}" 
             material="side: double"></a-triangle>
     """
 
@@ -259,8 +259,7 @@ class AircraftModelReader(object):
 
         if "final" not in cr.list_cases():
             raise AircraftModelReaderError(
-                f"Case recorder file, {
-                    self._case_recorder_file} does not have expected case named 'final'"
+                f"Case recorder file, {self._case_recorder_file} does not have expected case named 'final'"
             )
 
         self._final_case = cr.get_case("final")
@@ -378,7 +377,7 @@ class Fuselage(object):
     def get_aframe_markup(self):
         return f"""
             <!-- fuselage -->
-            <a-cylinder id="cylinder" position="0 0 0" radius="{self._radius}" height="{self._length}"
+            <a-cylinder id="cylinder" position="0 0 0" radius="{self._radius}" height="{self._length}" 
                 rotation="0 90 0" color="white"></a-cylinder>
             <!-- front cone -->
             <a-sphere color="white" radius="{self._radius}" position="0 {self._length/2.} 0"></a-sphere>
@@ -618,8 +617,7 @@ class HorizontalWing(object):
                 )
         except AircraftModelReaderError as e:
             print(
-                f"Warning: Unable to read horizontal wing of type '{
-                    self._wing_type}' variables due to the error: {e} "
+                f"Warning: Unable to read horizontal wing of type '{self._wing_type}' variables due to the error: {e} "
             )
             raise
 
@@ -812,9 +810,9 @@ class Engines(object):
                 distance_above_fuselage = self._wing.vertical_position - self._engine_diameter / 2.
                 entities += f"""
                         <!-- engine -->
-                        <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage} {distance_from_fuselage}" radius="{self._engine_diameter/2}" height="{self._engine_length}"
+                        <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage} {distance_from_fuselage}" radius="{self._engine_diameter/2}" height="{self._engine_length}" 
                             rotation="0 90 0" color="white"></a-cylinder>
-                        <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage} {-distance_from_fuselage}" radius="{self._engine_diameter/2}" height="{self._engine_length}"
+                        <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage} {-distance_from_fuselage}" radius="{self._engine_diameter/2}" height="{self._engine_length}" 
                             rotation="0 90 0" color="white"></a-cylinder>
                 """
                 if self._has_propellers:
@@ -823,14 +821,14 @@ class Engines(object):
                     propeller_blade_length = self._engine_diameter * 2.0
                     entities += f"""
                             <!-- engine -->
-                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}"
+                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}" 
                                 rotation="90 135 0" color="grey"></a-cylinder>
-                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}"
+                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}" 
                                 rotation="90 45 0" color="grey"></a-cylinder>
                             <!-- engine -->
-                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {-distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}"
+                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {-distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}" 
                                 rotation="90 135 0" color="grey"></a-cylinder>
-                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {-distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}"
+                            <a-cylinder id="cylinder" position="{distance_above_fuselage} {distance_along_fuselage + self._engine_length/2 + propeller_blade_radius} {-distance_from_fuselage}" radius="{propeller_blade_radius}" height="{propeller_blade_length}" 
                                 rotation="90 45 0" color="grey"></a-cylinder>
                     """
 
@@ -893,7 +891,7 @@ class Aircraft3DModel(object):
         y_camera = fuselage_length / 2.0
         z_camera = fuselage_length
         self._camera_entity = f"""
-        <a-entity camera look-controls="enabled: false" orbit-controls="target: 0 0 0;
+        <a-entity camera look-controls="enabled: false" orbit-controls="target: 0 0 0; 
             minDistance: 2; maxDistance: 180; initialPosition: 0 {y_camera} {z_camera}; rotateSpeed: 0.5"></a-entity>
         """
 

@@ -141,8 +141,7 @@ def assert_metadata_alphabetization(metadata_variables_list):
 
     if out_of_order_vars:
         raise ValueError(
-            f"The variable(s) {
-                out_of_order_vars} in the metadata are out of alphabetical order with their previous value."
+            f"The variable(s) {out_of_order_vars} in the metadata are out of alphabetical order with their previous value."
         )
 
 
