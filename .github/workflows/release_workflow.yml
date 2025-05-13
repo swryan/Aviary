@@ -34,9 +34,6 @@ jobs:
       - name: build
         run: hatch build
 
-      - name: Publish package distributions to PyPI (v1.12.4)
-        uses: pypa/gh-action-pypi-publish@76f52bc884231f62b9a034ebfe128415bbaabdfc
-
   test-pypi-release:
     name: Test Aviary PyPI Release
     needs: [pypi-publish]
