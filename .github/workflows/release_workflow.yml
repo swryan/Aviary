@@ -50,4 +50,3 @@ jobs:
             "use_pypi": true
            }
         token: ${{ secrets.ACCESS_TOKEN }}
-      if: github.event_name == 'release'
